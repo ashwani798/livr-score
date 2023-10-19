@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="refresh" content="10"> -->
+    <title>Live-Cricket-score</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="Live-Cricket-Scrore.css">
+    <style>
+        h1{
+    text-align: center;
+     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: black;
+    width: 80%;
+    margin: auto;
+    border-radius: 10px;
+    padding: 1rem;
+    font-size: 30px;
+}
+
+.row1-container{
+    background-color: black;
+    color: white;
+    width: 80%;
+    margin: 10px auto;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+.row2-container{
+    /* background-color: rgb(159, 196, 11); */
+    color: red;
+    width: 80%;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.match-status{
+color: green;
+font-size: 20px;
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.team-1{
+    margin-top: 10px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+.team-2{
+    margin-top: 10px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+.t1score{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+     color: green;
+}
+.t2score{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+    color: green;
+}
+.row2-container{
+    
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    
+}
+.col-3{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+img{
+    width: 40px;
+    border: none;
+    border-radius: 10px;
+    background: none;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: red;
+  border-radius: 10px;
+}
+    </style>
+</head>
+
+<body>
+    <h1>Welcome to live Cricket Turnament</h1>
+    <div class="container-fluid box">
+        <!-- <div class="row justify-content-around row1-container">
+            <div class="row justify-content-around match-status">gv</div>
+            <div class="col-3">
+                  <p class="team-1">
+
+                  </p>
+                  <p class="t1score">scrore1</p>
+            </div>
+            <div class="col-3">
+                <p class="team-2">
+             
+                </p>
+                <p class="t2score">scrore2</p>
+            </div>
+        </div>
+        <div class="row justify-content-around row2-container">
+            <div class="col-10 match-time">
+                   
+            </div>
+        </div> -->
+    </div>
+    <script>
+
+        const box = document.querySelector(".box");
+
+        async function fetchscore() {
+
+            const url = 'https://api.cricapi.com/v1/cricScore?apikey=d183f1eb-e1bc-4bc5-ab38-15bc1ab650e8';
+
+            const response = await fetch(url);
+            const data1 = await response.json();
+
+            const arr = data1.data;
+            console.log(arr)
+
+            arr.map((ele) => {
+                box.innerHTML +=
+                    `
+                            <div class="row justify-content-around row1-container">
+            <div class="row justify-content-around match-status">${ele.status}</div>
+            <div class="col-3">
+                  <p class="team-1">
+                       <img src=${ele.t1img} />
+                         ${ele.t1}
+                  </p>
+                  <p class="t1score">${ele.t1s}</p>
+            </div>
+            <div class="col-3">
+                <p class="team-2">
+                    <img src=${ele.t2img} />
+                       ${ele.t2}
+                </p>
+                <p class="t2score">${ele.t2s}</p>
+            </div>
+            <div class="row justify-content-around row2-container">
+            <div class="col-10 match-time">
+                   ${ele.dateTimeGMT}
+            </div>
+        </div>
+        </div>
+`;
+            })
+
+
+        }
+        fetchscore()
+
+       
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
